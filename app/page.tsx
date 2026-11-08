@@ -1,65 +1,72 @@
-import Image from "next/image";
+import HeroSection from '@/components/home/HeroSection';
+import FeaturedPackages from '@/components/home/FeaturedPackages';
+import CategorySection from '@/components/home/CategorySection';
+import Testimonials from '@/components/home/Testimonials';
+import NewsletterSection from '@/components/home/NewsletterSection';
+import { Leaf, Shield, Clock, Award } from 'lucide-react';
+
+const WHY_US = [
+  {
+    icon: Award,
+    title: 'KSTDC Certified',
+    description: 'Every package is certified by Kerala State Tourism Development Corporation for quality and safety.',
+  },
+  {
+    icon: Leaf,
+    title: 'Eco-Responsible',
+    description: 'We partner only with eco-friendly operators committed to preserving Kerala\'s natural heritage.',
+  },
+  {
+    icon: Shield,
+    title: 'Secure Booking',
+    description: 'Bank-grade security with instant confirmation, free cancellation options, and 24/7 support.',
+  },
+  {
+    icon: Clock,
+    title: 'Curated Itineraries',
+    description: 'Every itinerary is crafted by Kerala-born travel experts with 10+ years of experience.',
+  },
+];
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <>
+      <HeroSection />
+
+      {/* Why Choose Us */}
+      <section className="py-20 bg-[#0D0D0D]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <p className="section-label mb-3">Why KeralaTrips</p>
+            <h2 className="font-serif text-4xl font-bold text-[#F5F5F0]">
+              Travel with <span className="text-gold-gradient">Confidence</span>
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {WHY_US.map((item, i) => {
+              const Icon = item.icon;
+              return (
+                <div
+                  key={item.title}
+                  className="glass rounded-2xl p-6 card-hover text-center group"
+                  style={{ animationDelay: `${i * 0.1}s` }}
+                >
+                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C8A96E]/20 to-[#2D6A4F]/20 flex items-center justify-center mx-auto mb-4 group-hover:from-[#C8A96E]/30 group-hover:to-[#2D6A4F]/30 transition-all duration-300">
+                    <Icon size={22} className="text-[#C8A96E]" />
+                  </div>
+                  <h3 className="font-serif text-lg font-semibold text-[#F5F5F0] mb-2">{item.title}</h3>
+                  <p className="text-sm text-[#6B6B65] leading-relaxed">{item.description}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+      </section>
+
+      <FeaturedPackages />
+      <CategorySection />
+      <Testimonials />
+      <NewsletterSection />
+    </>
   );
 }

@@ -1,26 +1,262 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── Design Tokens ─────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-primary: #080808;
+  --bg-secondary: #111111;
+  --bg-card: #161616;
+  --bg-elevated: #1e1e1e;
+  --border: #2a2a2a;
+  --border-subtle: #1e1e1e;
+
+  --gold: #C8A96E;
+  --gold-light: #E2C98A;
+  --gold-dark: #9A7B4F;
+  --green: #2D6A4F;
+  --green-light: #40916C;
+  --green-muted: #1B4332;
+
+  --text-primary: #F5F5F0;
+  --text-secondary: #A8A8A0;
+  --text-muted: #6B6B65;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ─── Base ───────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ─── Typography ─────────────────────────────────────────────── */
+.font-serif {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  line-height: 1.2;
+}
+
+/* ─── Gold Gradient Text ─────────────────────────────────────── */
+.text-gold-gradient {
+  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-green-gradient {
+  background: linear-gradient(135deg, var(--green-light) 0%, var(--green) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glassmorphism ──────────────────────────────────────────── */
+.glass {
+  background: rgba(22, 22, 22, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 169, 110, 0.1);
+}
+
+.glass-dark {
+  background: rgba(8, 8, 8, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-gold {
+  background: rgba(200, 169, 110, 0.08);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(200, 169, 110, 0.2);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-dark);
+}
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: rgba(200, 169, 110, 0.25);
+  color: var(--gold-light);
+}
+
+/* ─── Gradient Backgrounds ───────────────────────────────────── */
+.gradient-hero {
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(45, 106, 79, 0.25) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 40% at 80% 50%, rgba(200, 169, 110, 0.08) 0%, transparent 50%),
+              var(--bg-primary);
+}
+
+.gradient-section {
+  background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%);
+}
+
+.gradient-card-hover {
+  background: linear-gradient(135deg, rgba(200, 169, 110, 0.05) 0%, rgba(45, 106, 79, 0.05) 100%);
+}
+
+/* ─── Gold Divider ───────────────────────────────────────────── */
+.gold-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.4;
+}
+
+/* ─── Animations ─────────────────────────────────────────────── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-gold {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(200, 169, 110, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(200, 169, 110, 0); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-gold {
+  animation: pulse-gold 2s ease-in-out infinite;
+}
+
+/* ─── Custom Utilities ───────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.card-hover {
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(200, 169, 110, 0.2);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  color: #0A0A0A;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  box-shadow: 0 8px 24px rgba(200, 169, 110, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-outline-gold {
+  border: 1px solid rgba(200, 169, 110, 0.4);
+  color: var(--gold);
+  transition: all 0.3s ease;
+}
+.btn-outline-gold:hover {
+  border-color: var(--gold);
+  background: rgba(200, 169, 110, 0.08);
+}
+
+.btn-green {
+  background: linear-gradient(135deg, var(--green-light), var(--green));
+  color: #fff;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.btn-green:hover {
+  box-shadow: 0 8px 24px rgba(45, 106, 79, 0.4);
+  transform: translateY(-1px);
+}
+
+/* ─── Star Rating ────────────────────────────────────────────── */
+.star-filled { color: var(--gold); }
+.star-empty  { color: var(--border); }
+
+/* ─── Loading Skeleton ───────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, var(--bg-card) 0%, var(--bg-elevated) 50%, var(--bg-card) 100%);
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* ─── Hero Overlay ───────────────────────────────────────────── */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(8, 8, 8, 0.3) 0%,
+    rgba(8, 8, 8, 0.1) 30%,
+    rgba(8, 8, 8, 0.6) 70%,
+    rgba(8, 8, 8, 0.95) 100%
+  );
+}
+
+/* ─── Section Label ──────────────────────────────────────────── */
+.section-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ─── Radix Overrides ────────────────────────────────────────── */
+[data-radix-popper-content-wrapper] {
+  z-index: 9999 !important;
 }
